@@ -1,29 +1,32 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "eechelons",
   "version": "${version}",
 
-  "name": "Example Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "Enemy Echelons",
+  "description": "Enemy Echelons is a mod that assigns levels and attribute modifications to mobs based on the world height range that they spawn at.",
   "authors": [
-    "Me!"
+    "gottsch"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/enemy-echelons",
+    "sources": "https://github.com/gottsch/gottsch-minecraft-EnemyEchelons"
   },
 
-  "license": "CC0-1.0",
+  "license": "LGPL-3.0-or-later",
   "icon": "assets/modid/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.fabricmc.example.ExampleMod"
+      "mod.gottsch.fabric.eechelons.EEchelons"
+    ],
+    "client": [
+      "mod.gottsch.fabric.eechelons.core.setup.ClientSetup"
     ]
   },
   "mixins": [
-    "modid.mixins.json"
+    "eechelons.mixins.json"
   ],
 
   "depends": {

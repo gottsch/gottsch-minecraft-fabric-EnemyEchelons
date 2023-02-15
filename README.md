@@ -1,9 +1,17 @@
-# Fabric Example Mod
+# Enemy Echelons
+Enemy Echelons is a mod that assigns levels and attribute modifications to mobs based on the world height range that they spawn at. This is a Vanilla+ mob progression mod in the same vein as Champions and Sliding Health.
 
-## Setup
+My goal was to create a mod in which the mobs progressively get more difficult the farther you travel down in the Overworld. It can be customized to be more difficult the farther you travel up as well, or both. I believe it works best in dimensions where there is a clear progression/change in the terrain, but it can be customized to any dimension.
 
-For setup instructions please see the [fabric wiki page](https://fabricmc.net/wiki/tutorial:setup) that relates to the IDE that you are using.
+## Echelons
+An echelon is made of all the mob attribute modifiers for a custom defined set of dimensions and mobs. Each echelon defintion has a list of stratum defined by a  min and max y-value. Each strata has a list of level-weight entries (histogram). These define the likelyhood of a level being assigned to a mob upon spawn.
 
-## License
+For more info and examples, see the [Echelons wiki page](https://github.com/gottsch/gottsch-minecraft-EnemyEchelons/wiki).
 
-This template is available under the CC0 license. Feel free to learn from it and incorporate it in your own projects.
+## Levels
+A level is assigned to a mob at spawn and this level determines that amount of modification to its attributes (health, damage, speed, etc). A mob with `Level 0` indicates a vanilla mob that has been unchanged. For every level, a mob will have its attrbiutes adjusted by the `factor` or `increment` settings in the echelons configuration.
+
+## Echelon Configuration
+Enemy Echelons is very configurable, allowing you to add as few or as many levels as you wish and to setup their respective attribute modifiers.
+
+See the [Configurations wiki page](https://github.com/gottsch/gottsch-minecraft-EnemyEchelons/wiki).
