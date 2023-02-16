@@ -31,11 +31,10 @@ public class ClientConfig extends AbstractSimpleConfig {
     public static Integer hudYOffset;
     public static Integer hudRange;
     public static Boolean useDarkHud;
-
-//    public final ForgeConfigSpec.BooleanValue enableWailaIntegration;
-//    public final ForgeConfigSpec.BooleanValue enableChampionsIntegration;
+    public static boolean enableWailaIntegration;
 
     public static ClientConfig instance = new ClientConfig();
+
 
     private ClientConfig() {}
 
@@ -61,8 +60,11 @@ public class ClientConfig extends AbstractSimpleConfig {
                         .append("hudRange=50\n")
                         .append("# Use dark theme HUD.\n")
                         .append("# Default: true\n")
-                        .append("useDarkHud=true\n");
-
+                        .append("useDarkHud=true\n")
+                        .append("# Moves the Enemy Echelons HUD beside (to the left) of the WAILA HUD.\n")
+                        .append("# This setting is ignored if hudXOffset or hudYOffset are set (ie. not 0).\n")
+                        .append("# Default: true\n")
+                        .append("enableWailaIntegration=true\n");
                 return builder.toString();
             }
         };
@@ -79,6 +81,7 @@ public class ClientConfig extends AbstractSimpleConfig {
         hudYOffset = config.getOrDefault("hudYOffset", 0);
         hudRange = config.getOrDefault("hudRange", 50);
         useDarkHud = config.getOrDefault("useDarkHud", true);
+        enableWailaIntegration = config.getOrDefault("enableWailaIntegration", true);
     }
 
 

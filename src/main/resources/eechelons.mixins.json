@@ -4,10 +4,11 @@
   "package": "mod.gottsch.fabric.eechelons.core.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-  ],
-  "client": [
     "MobEntityMixin",
     "XpAccessor"
+  ],
+  "client": [
+
   ],
   "injectors": {
     "defaultRequire": 1

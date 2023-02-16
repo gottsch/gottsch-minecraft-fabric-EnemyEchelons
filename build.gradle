@@ -30,6 +30,8 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
+	// use implementation to include libarary when testing ie runClient
+	implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-toml:2.14.2"
 	// must shadow the dependency to include it in the final jar.
 	// NOTE this seems opposite of the documentation
 	// https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
@@ -37,7 +39,9 @@ dependencies {
 	shadow "com.fasterxml.jackson.core:jackson-core:2.14.2"
 	shadow "com.fasterxml.jackson.core:jackson-databind:2.14.2"
 	shadow "com.fasterxml.jackson.dataformat:jackson-dataformat-toml:2.14.2"
+
 	modImplementation "gottsch:fabric-GottschCore-1.18.2:v2.1.0"
+	modImplementation ("curse.maven:jade-324717:4160646")
 
 }
 

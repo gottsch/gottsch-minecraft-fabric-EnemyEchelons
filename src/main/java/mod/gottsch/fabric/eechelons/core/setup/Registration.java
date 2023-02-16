@@ -28,6 +28,7 @@ import mod.gottsch.fabric.eechelons.core.event.AttackEntityHandler;
 import mod.gottsch.fabric.eechelons.core.event.ClientEntityWorldEvents;
 import mod.gottsch.fabric.eechelons.core.event.HudEventHandler;
 import mod.gottsch.fabric.eechelons.core.event.ServerEntityWorldEvents;
+import mod.gottsch.fabric.eechelons.core.integration.WailaIntegration;
 import mod.gottsch.fabric.eechelons.core.network.EEchelonsNetwork;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
@@ -72,14 +73,15 @@ public class Registration {
 		EchelonManager.build();
 
 		// events
-		ClientEntityEvents.ENTITY_LOAD.register(new ClientEntityWorldEvents());
-		HudEventHandler.EVENT.register(new HudEventHandler());
 		ServerEntityEvents.ENTITY_LOAD.register(new ServerEntityWorldEvents());
 		// NOTE for testing purposes
 		// AttackEntityCallback.EVENT.register(new AttackEntityHandler());
 
 		// networking on server side
 		EEchelonsNetwork.registerC2S();
+
+		// integration
+		WailaIntegration.init();
 	}
 
 	/**

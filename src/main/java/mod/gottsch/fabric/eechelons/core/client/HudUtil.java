@@ -25,6 +25,7 @@ import mod.gottsch.fabric.eechelons.EEchelons;
 import mod.gottsch.fabric.eechelons.core.config.ClientConfig;
 import mod.gottsch.fabric.eechelons.core.data.ILevelSupport;
 import mod.gottsch.fabric.eechelons.core.event.HudEventHandler;
+import mod.gottsch.fabric.eechelons.core.integration.WailaIntegration;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.render.GameRenderer;
@@ -77,14 +78,14 @@ public class HudUtil {
 			 */
 			int integrationXOffset = 0;
 			int integrationYOffset = 0;
-//			if (xOffset == 0 && yOffset == 0) {
+			if (xOffset == 0 && yOffset == 0) {
 //				if (ChampionsIntegration.isEnabled()) {
 //					integrationXOffset = CHAMPIONS_INTEGRATION_XOFFSET;
 //				}
-//				else if (WailaIntegration.isEnabled()) {
-//					integrationXOffset = WAILA_INTEGRATION_XOFFSET;
-//				}
-//			}
+			 if (WailaIntegration.isEnabled()) {
+					integrationXOffset = WAILA_INTEGRATION_XOFFSET;
+				}
+			}
 
 			// update static variable in the event handler
 			HudEventHandler.startX = xOffset + centerWidth + integrationXOffset;

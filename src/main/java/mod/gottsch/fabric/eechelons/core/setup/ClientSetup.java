@@ -17,11 +17,14 @@
  */
 package mod.gottsch.fabric.eechelons.core.setup;
 
+import mod.gottsch.fabric.eechelons.core.event.ClientEntityWorldEvents;
+import mod.gottsch.fabric.eechelons.core.event.HudEventHandler;
 import mod.gottsch.fabric.eechelons.core.network.EEchelonsNetwork;
 import mod.gottsch.fabric.eechelons.core.network.LevelResponsePacketToClient;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientEntityEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 
 /**
@@ -35,6 +38,10 @@ public class ClientSetup implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
 
+        // events
+        ClientEntityEvents.ENTITY_LOAD.register(new ClientEntityWorldEvents());
+        HudEventHandler.EVENT.register(new HudEventHandler());
+        // networking
         EEchelonsNetwork.registerS2C();
     }
 }

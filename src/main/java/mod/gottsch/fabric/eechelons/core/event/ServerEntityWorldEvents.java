@@ -33,7 +33,7 @@ public class ServerEntityWorldEvents implements ServerEntityEvents.Load {
     @Override
     public void onLoad(Entity entity, ServerWorld world) {
         // check if HostileEntity as all Hostiles will be ILevelSupport by mixins.
-        if (entity instanceof HostileEntity) {
+        if (entity instanceof ILevelSupport) {
             if (!EchelonManager.isValidEntity(entity)) {
                 return;
             }
