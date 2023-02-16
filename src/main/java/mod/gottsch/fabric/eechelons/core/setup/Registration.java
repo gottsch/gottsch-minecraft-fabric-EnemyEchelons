@@ -1,6 +1,6 @@
 /*
  * This file is part of  Enemy Echelons.
- * Copyright (c) 2022, Mark Gottschling (gottsch)
+ * Copyright (c) 2022 Mark Gottschling (gottsch)
  *
  * Enemy Echelons is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -32,10 +32,7 @@ import mod.gottsch.fabric.eechelons.core.network.EEchelonsNetwork;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.mob.ZombieEntity;
 import org.apache.commons.io.FileUtils;
 
 import java.io.*;
@@ -71,7 +68,6 @@ public class Registration {
 		createEchelonsConfig();
 		// load echelons config
 		holder = loadEchelonsConfig();
-		EEchelons.LOGGER.info("loaded echelons -> {}", holder.echelons);
 		// load echelons
 		EchelonManager.build();
 
@@ -79,11 +75,11 @@ public class Registration {
 		ClientEntityEvents.ENTITY_LOAD.register(new ClientEntityWorldEvents());
 		HudEventHandler.EVENT.register(new HudEventHandler());
 		ServerEntityEvents.ENTITY_LOAD.register(new ServerEntityWorldEvents());
-		AttackEntityCallback.EVENT.register(new AttackEntityHandler());
+		// NOTE for testing purposes
+		// AttackEntityCallback.EVENT.register(new AttackEntityHandler());
 
-		// networking
+		// networking on server side
 		EEchelonsNetwork.registerC2S();
-
 	}
 
 	/**
@@ -105,9 +101,6 @@ public class Registration {
 	}
 
 	private static EchelonsHolder loadEchelonsConfig() {
-//		manifest = readResourcesFromStream(
-//				Objects.requireNonNull(Treasure.instance.getClass().getClassLoader().getResourceAsStream("data/" + modID +"/" + META_FOLDER + "/manifest.json")), ResourceManifest.class);
-
 		String fileName = "eechelons-echelons" + "-" + ECHELONS_CONFIG_VERSION + ".toml";
 		Path path = Paths.get(FabricLoader.getInstance().getConfigDir().toString(), fileName);
 		File config = path.toFile();

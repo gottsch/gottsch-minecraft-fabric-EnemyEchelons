@@ -87,10 +87,10 @@ public class Interval<D> implements Comparable<Interval<D>> {
 			if (getEnd() == interval.getEnd()) {
 				return 0;
 			}
-			EEchelons.LOGGER.debug("this.end -> {}, interval.end -> {}", this.getEnd(), interval.getEnd());
+//			EEchelons.LOGGER.debug("this.end -> {}, interval.end -> {}", this.getEnd(), interval.getEnd());
 			return this.getEnd() < interval.getEnd() ? -1 : 1;
 		} else {
-			EEchelons.LOGGER.debug("this.end -> {}, interval.end -> {}", this.getEnd(), interval.getEnd());
+//			EEchelons.LOGGER.debug("this.end -> {}, interval.end -> {}", this.getEnd(), interval.getEnd());
 			return 1;
 		}
 	}
