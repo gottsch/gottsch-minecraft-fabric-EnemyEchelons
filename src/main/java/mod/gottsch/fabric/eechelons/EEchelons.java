@@ -19,29 +19,11 @@
  */
 package mod.gottsch.fabric.eechelons;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Objects;
-
-import mod.gottsch.fabric.eechelons.core.config.ClientConfig;
-import mod.gottsch.fabric.eechelons.core.config.CommonConfig;
-import mod.gottsch.fabric.eechelons.core.config.ServerConfig;
 import mod.gottsch.fabric.eechelons.core.setup.Registration;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.loader.api.FabricLoader;
-import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-/**
- * Many thanks go out to TheIllusiveC4 as the EchelonConfig
- * loading code was derived from Champions.
- *
- * @author Mark Gottschling on Jul 24, 2022
- * @see <a href="https://github.com/TheIllusiveC4/Champions">Champions</a>
- */
 public class EEchelons implements ModInitializer {
     public static final Logger LOGGER = LogManager.getLogger(EEchelons.MODID);
 
@@ -50,26 +32,5 @@ public class EEchelons implements ModInitializer {
     @Override
     public void onInitialize() {
         Registration.register();
-
-
-        // register the server config
-//		ModLoadingContext.get().registerConfig(Type.CLIENT, Config.CLIENT_SPEC);
-//		ModLoadingContext.get().registerConfig(Type.COMMON, Config.COMMON_SPEC);
-//		ModLoadingContext.get().registerConfig(Type.SERVER, Config.SERVER_SPEC);
-        // create the default config
-
-
-        // register the setup method for mod loading
-//		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-//		// register 'ModSetup::init' to be called at mod setup time (server and client)
-//		modEventBus.addListener(CommonSetup::init);
-//		modEventBus.addListener(this::config);
-//
-
-//		EEchelonsNetwork.register();
-//		ChampionsIntegration.init();
-//		WailaIntegration.init();
     }
-
-
 }

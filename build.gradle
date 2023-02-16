@@ -40,8 +40,8 @@ dependencies {
 	shadow "com.fasterxml.jackson.core:jackson-databind:2.14.2"
 	shadow "com.fasterxml.jackson.dataformat:jackson-dataformat-toml:2.14.2"
 
-	modImplementation "gottsch:fabric-GottschCore-1.18.2:v2.1.0"
-	modImplementation ("curse.maven:jade-324717:4160646")
+	modImplementation "gottsch:GottschCore-1.19.2:2.1.0"
+	modImplementation ("curse.maven:jade-324717:4328558")
 
 }
 
