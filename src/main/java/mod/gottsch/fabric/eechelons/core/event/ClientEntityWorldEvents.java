@@ -26,7 +26,7 @@ public class ClientEntityWorldEvents implements ClientEntityEvents.Load {
             }
 
             if (((ILevelSupport) entity).getLevel() == -1) {
-                EEchelons.LOGGER.debug("entity -> {} joined client, needs level update.", entity.getDisplayName().asString());
+//                EEchelons.LOGGER.debug("entity -> {} joined client, needs level update.", entity.getDisplayName().asString());
                 PacketByteBuf buf = PacketByteBufs.create();
                 buf.writeInt(entity.getId());
                 buf.writeUuid(entity.getUuid());

@@ -20,7 +20,7 @@ public class LevelResponsePacketToClient {
      * @param responseSender
      */
     public static void receive(MinecraftClient client, ClientPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) {
-        EEchelons.LOGGER.debug("client received packet");
+//        EEchelons.LOGGER.debug("client received packet");
         int id = buf.readInt();
         int level = buf.readInt();
 //        buf.release();
@@ -28,7 +28,7 @@ public class LevelResponsePacketToClient {
             // get the entity by uuid
             Entity entity = handler.getWorld().getEntityById(id);
             if (entity != null && entity instanceof ILevelSupport) {
-                EEchelons.LOGGER.debug("setting entity -> {} to level -> {}", entity.getDisplayName().asString(), level);
+//                EEchelons.LOGGER.debug("setting entity -> {} to level -> {}", entity.getDisplayName().asString(), level);
                 ((ILevelSupport)entity).setLevel(level);
             }
         });

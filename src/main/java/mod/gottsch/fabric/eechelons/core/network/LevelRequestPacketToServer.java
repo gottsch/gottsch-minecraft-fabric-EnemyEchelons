@@ -21,13 +21,9 @@ public class LevelRequestPacketToServer {
         int id = buf.readInt();
         UUID uuid = buf.readUuid();
 
-//        server.execute(() -> {
-        // TODO do stuff
         if (player.getWorld() == null) {
             return;
         }
-        // read the bug
-
 
         Entity entity = player.getWorld().getEntity(uuid);
         if (entity == null) {
@@ -37,9 +33,9 @@ public class LevelRequestPacketToServer {
         if (entity != null) {
             int level = ((ILevelSupport)entity).getLevel();
             // send a packet back
-            EEchelons.LOGGER.debug("entityId -> {} exists on server with level -> {}", id, level);
+//            EEchelons.LOGGER.debug("entityId -> {} exists on server with level -> {}", id, level);
 
-            if (ServerPlayNetworking.canSend((ServerPlayerEntity) entity, EEchelonsNetwork.LEVEL_RESPONSE_ID)) {
+            if (ServerPlayNetworking.canSend(player, EEchelonsNetwork.LEVEL_RESPONSE_ID)) {
                 // send the level back to the client
                 PacketByteBuf clientBuf = PacketByteBufs.create();
                 clientBuf.writeInt(entity.getId());

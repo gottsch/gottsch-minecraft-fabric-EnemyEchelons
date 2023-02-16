@@ -329,7 +329,7 @@ public class EchelonManager {
                 }
                 attribute.setBaseValue(newHealth);
                 mob.setHealth(mob.getMaxHealth());
-				EEchelons.LOGGER.debug("mob new health -> {}", mob.getMaxHealth());
+//				EEchelons.LOGGER.debug("mob new health -> {}", mob.getMaxHealth());
             }
         }
     }

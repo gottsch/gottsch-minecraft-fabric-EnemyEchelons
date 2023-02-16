@@ -26,6 +26,7 @@ import mod.gottsch.fabric.eechelons.core.config.ServerConfig;
 import mod.gottsch.fabric.eechelons.core.echelon.EchelonManager;
 import mod.gottsch.fabric.eechelons.core.event.AttackEntityHandler;
 import mod.gottsch.fabric.eechelons.core.event.ClientEntityWorldEvents;
+import mod.gottsch.fabric.eechelons.core.event.HudEventHandler;
 import mod.gottsch.fabric.eechelons.core.event.ServerEntityWorldEvents;
 import mod.gottsch.fabric.eechelons.core.network.EEchelonsNetwork;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientEntityEvents;
@@ -76,6 +77,7 @@ public class Registration {
 
 		// events
 		ClientEntityEvents.ENTITY_LOAD.register(new ClientEntityWorldEvents());
+		HudEventHandler.EVENT.register(new HudEventHandler());
 		ServerEntityEvents.ENTITY_LOAD.register(new ServerEntityWorldEvents());
 		AttackEntityCallback.EVENT.register(new AttackEntityHandler());
 
