@@ -47,7 +47,7 @@ import java.util.Objects;
  *
  */
 public class Registration {
-	private static final String ECHELONS_CONFIG_VERSION = "1.18.2-v1";
+	private static final String ECHELONS_CONFIG_VERSION = "1.19.3-v1";
 	public static EchelonsHolder holder;
 
 	/**
