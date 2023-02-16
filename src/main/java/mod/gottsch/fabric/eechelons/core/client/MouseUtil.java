@@ -49,7 +49,7 @@ public class MouseUtil {
 				Vec3d vec3d3 = vec3d.add(vec3d2.x * range, vec3d2.y * range, vec3d2.z * range);
 				Box box = player.getBoundingBox().stretch(vec3d2.multiply(range)).expand(1.0D, 1.0D, 1.0D);
 				EntityHitResult entityRayTraceResult =
-						ProjectileUtil.raycast(player, vec3d, vec3d3, box, (e) -> !e.isSpectator() && e.collides(), distance);
+						ProjectileUtil.raycast(player, vec3d, vec3d3, box, (e) -> !e.isSpectator() && e.canHit(), distance);
 
 				if (entityRayTraceResult != null) {
 					Entity hoverEntity = entityRayTraceResult.getEntity();

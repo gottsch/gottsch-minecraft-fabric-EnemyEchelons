@@ -19,7 +19,6 @@ package mod.gottsch.fabric.eechelons.core.network;
 
 import mod.gottsch.fabric.eechelons.EEchelons;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.util.Identifier;
 

@@ -70,7 +70,7 @@ public class HudUtil {
 			RenderSystem.defaultBlendFunc();
 			RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 			RenderSystem.enableBlend();
-			RenderSystem.setShader(GameRenderer::getPositionTexShader);
+			RenderSystem.setShader(GameRenderer::getPositionTexColorProgram);
 			RenderSystem.setShaderTexture(0, ClientConfig.useDarkHud ? HUD_DARK_BG : HUD_BG); // GUI_BAR_TEXTURES);
 
 			/*

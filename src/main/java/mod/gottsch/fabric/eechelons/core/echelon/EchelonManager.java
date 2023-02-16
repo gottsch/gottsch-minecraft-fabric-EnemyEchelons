@@ -180,7 +180,7 @@ public class EchelonManager {
      * @return
      */
     public static EchelonsHolder.Echelon getEchelon(Entity mob) {
-        Pair<Identifier, Identifier> keyPair = new ImmutablePair<>(mob.getWorld().getDimension().getEffects(), EntityType.getId(mob.getType()));
+        Pair<Identifier, Identifier> keyPair = new ImmutablePair<>(mob.getWorld().getDimension().effects(), EntityType.getId(mob.getType()));
         if (ECHELONS_BY_MOB.containsKey(keyPair)) {
             return ECHELONS_BY_MOB.get(keyPair);
         }
@@ -190,8 +190,8 @@ public class EchelonManager {
                 return ECHELONS_BY_MOB.get(keyPair);
             }
             else {
-                if (isValidEntity(mob.getWorld().getDimension().getEffects(), mob)) {
-                    return ECHELONS.get(mob.getWorld().getDimension().getEffects());
+                if (isValidEntity(mob.getWorld().getDimension().effects(), mob)) {
+                    return ECHELONS.get(mob.getWorld().getDimension().effects());
                 }
                 else if (isValidEntity(ALL_DIMENSION, mob)) {
                     return ECHELONS.get(ALL_DIMENSION);
@@ -207,7 +207,7 @@ public class EchelonManager {
         IntervalTree<WeightedCollection<Double, Integer>> tree = null;
 
         // first check the histograms by mob map
-        Pair<Identifier, Identifier> keyPair = new ImmutablePair<>(mob.getWorld().getDimension().getEffects(), EntityType.getId(mob.getType()));
+        Pair<Identifier, Identifier> keyPair = new ImmutablePair<>(mob.getWorld().getDimension().effects(), EntityType.getId(mob.getType()));
         if (HISTOGRAM_TREES_BY_MOB.containsKey(keyPair)) {
             tree = HISTOGRAM_TREES_BY_MOB.get(keyPair);
             result = getLevel(tree, searchValue);
@@ -219,7 +219,7 @@ public class EchelonManager {
                 result = getLevel(tree, searchValue);
             }
             else {
-                result = getLevel(mob.getWorld().getDimension().getEffects(), searchValue);
+                result = getLevel(mob.getWorld().getDimension().effects(), searchValue);
             }
         }
 
@@ -283,7 +283,7 @@ public class EchelonManager {
 
         if (levelEntity.getLevel() < 0) {
             // determine dimension
-            Identifier dimension = entity.getEntityWorld().getDimension().getEffects();
+            Identifier dimension = entity.getEntityWorld().getDimension().effects();
 
             // determine the altitute (y-value)
             int y = entity.getBlockY();
