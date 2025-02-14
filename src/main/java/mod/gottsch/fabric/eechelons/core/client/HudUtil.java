@@ -17,21 +17,16 @@
  */
 package mod.gottsch.fabric.eechelons.core.client;
 
-import java.awt.Color;
-
-import com.mojang.blaze3d.systems.RenderSystem;
-
 import mod.gottsch.fabric.eechelons.EEchelons;
-import mod.gottsch.fabric.eechelons.core.config.ClientConfig;
 import mod.gottsch.fabric.eechelons.core.data.ILevelSupport;
 import mod.gottsch.fabric.eechelons.core.event.HudEventHandler;
 import mod.gottsch.fabric.eechelons.core.integration.WailaIntegration;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawableHelper;
-import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
+
+import java.awt.*;
 
 /**
  * This class was derived from Champions by TheIllusiveC4
@@ -49,11 +44,11 @@ public class HudUtil {
 	
 	/**
 	 * 
-	 * @param matrixStack
+	 * @param drawContext
 	 * @param livingEntity
 	 * @return
 	 */
-	public static boolean renderLevelBar(MatrixStack matrixStack, final LivingEntity livingEntity) {
+	public static boolean renderLevelBar(DrawContext drawContext, final LivingEntity livingEntity) {
 
 		int level = ((ILevelSupport)livingEntity).getLevel();
 
@@ -64,14 +59,14 @@ public class HudUtil {
 			int centerWidth = i / 2 - HUD_OFFSET_WIDTH;
 			int centerHeight = HUD_OFFSET_HEIGHT;
 			
-			int xOffset = ClientConfig.hudXOffset;
-			int yOffset = ClientConfig.hudYOffset;
+			int xOffset = 0;//Config.hudXOffset;
+			int yOffset = 0;//Config.hudYOffset;
 
-			RenderSystem.defaultBlendFunc();
-			RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-			RenderSystem.enableBlend();
-			RenderSystem.setShader(GameRenderer::getPositionTexColorProgram);
-			RenderSystem.setShaderTexture(0, ClientConfig.useDarkHud ? HUD_DARK_BG : HUD_BG); // GUI_BAR_TEXTURES);
+//			RenderSystem.defaultBlendFunc();
+//			RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+//			RenderSystem.enableBlend();
+//			RenderSystem.setShader(GameRenderer::getPositionTexColorProgram);
+//			RenderSystem.setShaderTexture(0, ClientConfig.useDarkHud ? HUD_DARK_BG : HUD_BG); // GUI_BAR_TEXTURES);
 
 			/*
 			 * only recalc offsets for integration if the config offsets are still default values
@@ -91,23 +86,34 @@ public class HudUtil {
 			HudEventHandler.startX = xOffset + centerWidth + integrationXOffset;
 			HudEventHandler.startY = yOffset + 1 + integrationYOffset;
 
+//			drawContext.getMatrices().push();
+////			drawContext.getMatrices().translate(0.0F, 0.0F, 100.0F);
+//			int ii = centerWidth - (64 / 2);
+//			int jj = centerHeight - (21 / 2);
+//			drawContext.drawTexture(ClientConfig.useDarkHud ? HUD_DARK_BG : HUD_BG, ii, jj, 0, 0, 64, 20, 64, 20);
+//			drawContext.getMatrices().pop();
+
+			// draw bg texture
 			// 0 = startx, 0 = starty, 64 = endx, 20 = endy, 64 = width of image, 20 = height of image
-			DrawableHelper.drawTexture(matrixStack, xOffset + centerWidth + integrationXOffset, yOffset + centerHeight + integrationYOffset, 0, 0, 64, 20, 64, 20);
+			drawContext.drawTexture(EEchelons.CONFIG.useDarkHud() ? HUD_DARK_BG : HUD_BG,
+					xOffset + centerWidth + integrationXOffset, yOffset + centerHeight + integrationYOffset, 0, 0, 64, 20, 64, 20);
 			// display the level text
 			String text = "Level " + level;
-//			client.font.drawShadow(matrixStack, text,
-//					xOffset + (float) (i / 2 - client.font.width(text) / 2) + integrationXOffset,
-//					yOffset + (float) (centerHeight  + client.font.lineHeight - 3) + integrationYOffset, Color.WHITE.getRGB());
 			int textWidth = client.textRenderer.getWidth(text);
 			int fontHeight = client.textRenderer.fontHeight;
 			int xPos = i / 2 - textWidth / 2;
 			int yPos = centerHeight + fontHeight -3;
-			client.textRenderer.drawWithShadow(matrixStack, text,
-					(float)xPos + xOffset + integrationXOffset,
-					(float)yPos + yOffset + integrationYOffset, Color.WHITE.getRGB());
 
-			RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-			RenderSystem.disableBlend();
+
+//			client.textRenderer.drawWithShadow
+			drawContext.drawTextWithShadow
+					(client.textRenderer,
+							text,
+					xPos + xOffset + integrationXOffset,
+					yPos + yOffset + integrationYOffset, Color.WHITE.getRGB());
+
+//			RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+//			RenderSystem.disableBlend();
 		}
 
 		return true;

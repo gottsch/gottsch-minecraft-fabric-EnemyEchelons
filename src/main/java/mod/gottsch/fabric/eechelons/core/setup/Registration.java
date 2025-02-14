@@ -19,24 +19,17 @@ package mod.gottsch.fabric.eechelons.core.setup;
 
 import com.fasterxml.jackson.dataformat.toml.TomlMapper;
 import mod.gottsch.fabric.eechelons.EEchelons;
-import mod.gottsch.fabric.eechelons.core.config.ClientConfig;
-import mod.gottsch.fabric.eechelons.core.config.CommonConfig;
 import mod.gottsch.fabric.eechelons.core.config.EchelonsHolder;
-import mod.gottsch.fabric.eechelons.core.config.ServerConfig;
 import mod.gottsch.fabric.eechelons.core.echelon.EchelonManager;
-import mod.gottsch.fabric.eechelons.core.event.AttackEntityHandler;
-import mod.gottsch.fabric.eechelons.core.event.ClientEntityWorldEvents;
-import mod.gottsch.fabric.eechelons.core.event.HudEventHandler;
 import mod.gottsch.fabric.eechelons.core.event.ServerEntityWorldEvents;
 import mod.gottsch.fabric.eechelons.core.integration.WailaIntegration;
 import mod.gottsch.fabric.eechelons.core.network.EEchelonsNetwork;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
-import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.fabricmc.loader.api.FabricLoader;
 import org.apache.commons.io.FileUtils;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
@@ -47,23 +40,13 @@ import java.util.Objects;
  *
  */
 public class Registration {
-	private static final String ECHELONS_CONFIG_VERSION = "1.19.3-v1";
+	private static final String ECHELONS_CONFIG_VERSION = "1.20.1-v3";
 	public static EchelonsHolder holder;
 
 	/**
 	 *
 	 */
 	public static void register() {
-
-		// TODO research and install better config, like Cloth or owo
-		// load client config
-		ClientConfig.register(EEchelons.MODID + "-client-config");
-		// load common config
-		CommonConfig.register(EEchelons.MODID + "-common-config");
-		// setup rolling file appender
-		CommonConfig.instance.addRollingFileAppender(EEchelons.MODID);
-		// load server config
-		ServerConfig.register(EEchelons.MODID + "-server-config");
 
 		// create default server config
 		createEchelonsConfig();

@@ -1,7 +1,7 @@
 /*
  * This file is part of  Enemy Echelons.
- * Copyright (c) 2022 Mark Gottschling (gottsch)
- * 
+ * Copyright (c) 2022, Mark Gottschling (gottsch)
+ *
  * All rights reserved.
  *
  * Enemy Echelons is free software: you can redistribute it and/or modify
@@ -19,6 +19,11 @@
  */
 package mod.gottsch.fabric.eechelons.core.config;
 
+import mod.gottsch.fabric.eechelons.core.bst.Interval;
+import mod.gottsch.fabric.eechelons.core.bst.IntervalTree;
+import mod.gottsch.fabric.gottschcore.random.WeightedCollection;
+import org.apache.commons.lang3.ObjectUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,8 +36,9 @@ import java.util.List;
  */
 public class EchelonsHolder {
 	public List<Echelon> echelons;
-	
+
 	public static class Echelon {
+		private String id;
 		private List<String> dimensions;
 		private Double hpFactor = 0.0;
 		private Double maxHp;
@@ -50,15 +56,62 @@ public class EchelonsHolder {
 		private Double maxSpeed;
 		private Double flySpeedFactor = 0.0;
 		private Double maxFlySpeed;
-		
+
 		private Double xpFactor = 0.0;
 		private Double maxXp;
-		
+
+		/*
+		 * these are lists for mod wildcards. these lists only contain the modid.
+		 * ex ["minecraft", "ddenizens"]
+		 * if a wildcard is used in the mob lists, they need to be added to these lists.
+		 * ex. "ddenizens:*" in mob list -> "ddenizens" in mod list.
+		 * these lists supercede the mob lists.
+		 */
+		private List<String> modWhitelist;
+		private List<String> modBlacklist;
+
 		private List<String> mobWhitelist;
 		private List<String> mobBlacklist;
 
 		private List<Strata> stratum;
-		
+
+		// internal: not set by config, but set my the manager
+		private IntervalTree<WeightedCollection<Double, Integer>> histogram;
+
+		/**
+		 *
+		 * @param y
+		 * @return
+		 */
+		public Integer getLevel(Integer y) {
+			Integer result = 0;
+
+			List<Interval<WeightedCollection<Double, Integer>>> stratum = histogram
+					.getOverlapping(histogram.getRoot(), new Interval<>(y, y), false);
+
+			if (ObjectUtils.isEmpty(stratum)) {
+				return 0;
+			}
+
+			// get the first element/strata - there should only be one.
+			WeightedCollection<Double, Integer> col = stratum.get(0).getData();
+			if (ObjectUtils.isEmpty(col)) {
+				return 0;
+			}
+			// get the next weighted random integer
+			result = col.next();
+
+			return result;
+		}
+
+		public String getId() {
+			return this.id;
+		}
+
+		public void setId(String id) {
+			this.id = id;
+		}
+
 		public List<String> getDimensions() {
 			if (dimensions == null) {
 				dimensions = new ArrayList<>();
@@ -80,7 +133,7 @@ public class EchelonsHolder {
 			}
 			this.hpFactor = hpFactor;
 		}
-		
+
 		public boolean hasHpFactor() {
 			return hpFactor != null && hpFactor > 0.0;
 		}
@@ -95,7 +148,7 @@ public class EchelonsHolder {
 		public void setDamageFactor(Double damageFactor) {
 			this.damageFactor = damageFactor;
 		}
-		
+
 		public boolean hasDamageFactor() {
 			return damageFactor != null && damageFactor > 0.0;
 		}
@@ -109,6 +162,28 @@ public class EchelonsHolder {
 
 		public void setMobBlacklist(List<String> mobBlacklist) {
 			this.mobBlacklist = mobBlacklist;
+		}
+
+		public List<String> getModBlacklist() {
+			if (modBlacklist == null) {
+				modBlacklist = new ArrayList<>();
+			}
+			return modBlacklist;
+		}
+
+		public void setModBlacklist(List<String> modBlacklist) {
+			this.modBlacklist = modBlacklist;
+		}
+
+		public List<String> getModWhitelist() {
+			if (modWhitelist == null) {
+				modWhitelist = new ArrayList<>();
+			}
+			return modWhitelist;
+		}
+
+		public void setModWhitelist(List<String> list) {
+			this.modWhitelist = list;
 		}
 
 		public Double getMaxHp() {
@@ -152,7 +227,7 @@ public class EchelonsHolder {
 		public boolean hasXpFactor() {
 			return xpFactor != null && xpFactor > 0.0;
 		}
-		
+
 		public void setXpFactor(Double xpFactor) {
 			this.xpFactor = xpFactor;
 		}
@@ -179,7 +254,7 @@ public class EchelonsHolder {
 		public boolean hasSpeedFactor() {
 			return speedFactor != null && speedFactor > 0.0;
 		}
-		
+
 		public Double getMaxSpeed() {
 			return maxSpeed;
 		}
@@ -202,7 +277,7 @@ public class EchelonsHolder {
 		public boolean hasKnockbackIncrement() {
 			return knockbackIncrement != null && knockbackIncrement > 0.0;
 		}
-		
+
 		public Double getMaxKnockback() {
 			return maxKnockback;
 		}
@@ -225,7 +300,7 @@ public class EchelonsHolder {
 		public boolean hasKnockbackResistIncrement() {
 			return knockbackResistIncrement != null && knockbackResistIncrement > 0.0;
 		}
-		
+
 		public Double getMaxKnockbackResist() {
 			return maxKnockbackResist;
 		}
@@ -233,7 +308,7 @@ public class EchelonsHolder {
 		public void setMaxKnockbackResist(Double maxKnockbackResist) {
 			this.maxKnockbackResist = maxKnockbackResist;
 		}
-		
+
 		public Double getArmorFactor() {
 			if (armorFactor == null) {
 				armorFactor = 0.0;
@@ -248,7 +323,7 @@ public class EchelonsHolder {
 		public boolean hasArmorFactor() {
 			return armorFactor != null && armorFactor > 0.0;
 		}
-		
+
 		public Double getMaxArmor() {
 			return maxArmor;
 		}
@@ -271,7 +346,7 @@ public class EchelonsHolder {
 		public boolean hasArmorToughnessFactor() {
 			return armorToughnessFactor != null && armorToughnessFactor > 0.0;
 		}
-		
+
 		public Double getMaxArmorToughness() {
 			return maxArmorToughness;
 		}
@@ -289,17 +364,25 @@ public class EchelonsHolder {
 
 		public void setMobWhitelist(List<String> mobWhitelist) {
 			this.mobWhitelist = mobWhitelist;
-		}		
+		}
+
+		public IntervalTree<WeightedCollection<Double, Integer>> getHistogram() {
+			return this.histogram;
+		}
+
+		public void setHistogram(IntervalTree<WeightedCollection<Double, Integer>> histogram) {
+			this.histogram = histogram;
+		}
 	}
-	
+
 	/*
-	 * 
+	 *
 	 */
 	public static class Strata {
 		private Integer min;
 		private Integer max;
 		private List<LevelEntry> histogram;
-		
+
 		public Integer getMin() {
 			return min;
 		}
@@ -317,17 +400,17 @@ public class EchelonsHolder {
 		}
 		public void setHistogram(List<LevelEntry> histogram) {
 			this.histogram = histogram;
-		}		
+		}
 		@Override
 		public String toString() {
 			return "Strata [min=" + min + ", max=" + max + ", histogram=" + histogram + "]";
 		}
 	}
-	
+
 	public static class LevelEntry {
 		private Integer level;
 		private Double weight;
-		
+
 		public Integer getLevel() {
 			return level;
 		}
@@ -340,10 +423,10 @@ public class EchelonsHolder {
 		public void setWeight(Double weight) {
 			this.weight = weight;
 		}
-		
+
 		@Override
 		public String toString() {
 			return "LevelEntry [level=" + level + ", weight=" + weight + "]";
-		}		
+		}
 	}
 }

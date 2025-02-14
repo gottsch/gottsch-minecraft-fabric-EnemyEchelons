@@ -10,7 +10,7 @@
   ],
   "contact": {
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/enemy-echelons",
-    "sources": "https://github.com/gottsch/gottsch-minecraft-EnemyEchelons"
+    "sources": "https://github.com/gottsch/gottsch-minecraft-fabric-EnemyEchelons"
   },
 
   "license": "LGPL-3.0-or-later",
@@ -30,10 +30,10 @@
   ],
 
   "depends": {
-    "fabricloader": ">=0.14.14",
-    "fabric": "*",
-    "minecraft": "~1.19.3",
-    "java": ">=17"
+    "fabricloader": ">=0.16.9",
+    "minecraft": "~1.20.1",
+    "java": ">=17",
+    "fabric-api": "*"
   },
   "suggests": {
     "another-mod": "*"

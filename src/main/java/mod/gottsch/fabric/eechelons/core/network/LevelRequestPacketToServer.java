@@ -42,7 +42,7 @@ public class LevelRequestPacketToServer {
             return;
         }
 
-        Entity entity = player.getWorld().getEntity(uuid);
+        Entity entity = player.getServerWorld().getEntity(uuid);
         if (entity == null) {
             entity = player.getWorld().getEntityById(id);
         }

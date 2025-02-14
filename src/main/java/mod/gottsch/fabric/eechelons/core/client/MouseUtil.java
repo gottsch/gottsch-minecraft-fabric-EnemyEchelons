@@ -17,7 +17,8 @@
  */
 package mod.gottsch.fabric.eechelons.core.client;
 
-import mod.gottsch.fabric.eechelons.core.config.ClientConfig;
+
+import mod.gottsch.fabric.eechelons.EEchelons;
 import mod.gottsch.fabric.eechelons.core.data.ILevelSupport;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;
@@ -41,7 +42,7 @@ public class MouseUtil {
 		Entity player = mc.getCameraEntity();
 		if (player != null) {
 			if (mc.world != null) {
-				double range = ClientConfig.hudRange;
+				double range = EEchelons.CONFIG.hudRange();
 				HitResult rayTraceResult = player.raycast(range, partialTicks, false);
 				Vec3d vec3d = player.getCameraPosVec(partialTicks);
 				double distance = rayTraceResult.squaredDistanceTo(mc.player);

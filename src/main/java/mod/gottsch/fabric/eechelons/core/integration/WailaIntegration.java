@@ -17,7 +17,7 @@
  */
 package mod.gottsch.fabric.eechelons.core.integration;
 
-import mod.gottsch.fabric.eechelons.core.config.ClientConfig;
+import mod.gottsch.fabric.eechelons.EEchelons;
 import net.fabricmc.loader.api.FabricLoader;
 
 /**
@@ -39,7 +39,7 @@ public class WailaIntegration {
 	}
 
 	public static boolean isEnabled() {
-		return ClientConfig.enableWailaIntegration
+		return EEchelons.CONFIG.enableWailaIntegration()
 				&& (jadeLoaded || wthitLoaded);
 	}
 	

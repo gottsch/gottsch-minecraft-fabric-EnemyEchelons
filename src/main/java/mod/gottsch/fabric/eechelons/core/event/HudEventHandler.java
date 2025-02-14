@@ -17,13 +17,15 @@
  */
 package mod.gottsch.fabric.eechelons.core.event;
 
+import mod.gottsch.fabric.eechelons.EEchelons;
 import mod.gottsch.fabric.eechelons.core.client.HudUtil;
 import mod.gottsch.fabric.eechelons.core.client.MouseUtil;
-import mod.gottsch.fabric.eechelons.core.config.ServerConfig;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.hit.EntityHitResult;
+import net.minecraft.util.hit.HitResult;
 
 import java.util.Optional;
 
@@ -34,29 +36,35 @@ import java.util.Optional;
  */
 public class HudEventHandler implements HudRenderCallback {
 
-	public static boolean isRendering = false;
-	
 	// NOTE these are only used to check where the offset is set to, so other integrations can move if they overlap
 	// these are NOT used in the actual echelons rendering of background and level text 
 	public static int startX = 0;
 	public static int startY = 0;
 
 	@Override
-	public void onHudRender(MatrixStack matrixStack, float tickDelta) {
-		/*
-		 * TODO this doesn't belong in server config if using SimpleConfig because
-		 *  this is run on the client side and SimpleConfig doesn't sync config values.
-		 */
-		if (ServerConfig.showHud) {
-			MinecraftClient mc = MinecraftClient.getInstance();
-			Optional<LivingEntity> livingEntity = MouseUtil.getMouseOverEchelonMob(mc, tickDelta);
-			livingEntity.ifPresent(entity -> {
-				isRendering = HudUtil.renderLevelBar(matrixStack, entity);
-			});
+	public void onHudRender(DrawContext drawContext, float tickDelta) {
 
-			if (livingEntity.isEmpty()) {
-				isRendering = false;
+		if (EEchelons.CONFIG.showHud() && EEchelons.CONFIG.showClientHud()) {
+			MinecraftClient mc = MinecraftClient.getInstance();
+
+			Optional<LivingEntity> livingEntity;
+
+			if (EEchelons.CONFIG.hudRangeEnabled()) {
+				// NOTE mc.cameraEntity.raycast() does not work for Entities - only returns Blocks
+				livingEntity = MouseUtil.getMouseOverEchelonMob(mc, tickDelta);
+			} else {
+				HitResult hitResult = mc.crosshairTarget;
+				if (hitResult.getType() == HitResult.Type.ENTITY
+						&& ((EntityHitResult)hitResult).getEntity() instanceof LivingEntity) {
+					livingEntity = Optional.of((LivingEntity)((EntityHitResult)hitResult).getEntity());
+				} else {
+					livingEntity = Optional.empty();
+				}
 			}
+
+			livingEntity.ifPresent(entity -> {
+				HudUtil.renderLevelBar(drawContext, entity);
+			});
 		}
 	}
 }
